@@ -6,7 +6,7 @@
 let checkButton = document.querySelector("#btn-check");
 let userNumber;
 let score = document.querySelector(".score").innerHTML;
-let numbeOfClicks = 0;
+let numberOfClicks = 0;
 let highscore = document.querySelector(".highscore").innerHTML;
 console.log(highscore);
 let scoreFinish;
@@ -27,7 +27,7 @@ again.addEventListener("click", function () {
   body.style.background = "#232229";
   document.querySelector(".score").innerHTML = 20;
   document.querySelector(".highscore").innerHTML = 0;
-  numbeOfClicks = 0;
+  numberOfClicks = 0;
   document.querySelector("input").value = ``;
 });
 
@@ -35,10 +35,10 @@ again.addEventListener("click", function () {
 
 checkButton.addEventListener("click", function () {
   userNumber = document.querySelector("input").value;
-  scoreFinish = score - (numbeOfClicks + 1);
+  scoreFinish = score - (numberOfClicks + 1);
   console.log(`Число введенное пользлователем = ${userNumber}`);
-  numbeOfClicks += 1;
-  console.log(`Число попыток пользователя = ${numbeOfClicks}`);
+  numberOfClicks += 1;
+  console.log(`Число попыток пользователя = ${numberOfClicks}`);
   document.querySelector(".score").innerHTML = `${scoreFinish}`;
 
   if (userNumber > requiredNumber) {
@@ -55,5 +55,10 @@ checkButton.addEventListener("click", function () {
     document.querySelector(".highscore").innerHTML = `${numbeOfClicks}`;
     body.style.background = "#2cd050";
     alert("Победа, Вы угадали");
+  }
+
+  if (numberOfClicks == 20) {
+    checkButton.setAttribute("disabled", "");
+    alert("Вы использовали все 20 попыток, попробуйте сыграть снова попозже");
   }
 });
