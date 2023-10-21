@@ -52,7 +52,7 @@ checkButton.addEventListener("click", function () {
     alert("Вы не ввели число в поле начните угадывать");
   } else {
     soundVictorty.play();
-    document.querySelector(".highscore").innerHTML = `${numbeOfClicks}`;
+    document.querySelector(".highscore").innerHTML = `${numberOfClicks}`;
     body.style.background = "#2cd050";
     alert("Победа, Вы угадали");
   }
