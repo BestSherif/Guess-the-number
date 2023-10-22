@@ -8,12 +8,15 @@ let userNumber;
 let score = document.querySelector(".score").innerHTML;
 let numberOfClicks = 0;
 let highscore = document.querySelector(".highscore").innerHTML;
-console.log(highscore);
 let scoreFinish;
 let body = document.querySelector("body");
 let soundVictorty = new Audio("audio/Victory.mp3");
 let soundWrong = new Audio("audio/Wrong.mp3");
+let soundGameOver = new Audio("audio/Game Over.mp3");
 let again = document.querySelector("#btn-again");
+let displayMessage = function (message) {
+  document.querySelector(".message").textContent = message;
+};
 
 // We assign the value to the desired number at the start of the page
 // Задаем число при запуске страницы
@@ -29,12 +32,14 @@ again.addEventListener("click", function () {
   document.querySelector(".highscore").innerHTML = 0;
   numberOfClicks = 0;
   document.querySelector("input").value = ``;
+  document.querySelector(".number").innerHTML = `?`;
+  displayMessage("Начните угадывать");
 });
 
 //(2) Второй блок с вводом числа от пользователя и проверкой совпадения
 
 checkButton.addEventListener("click", function () {
-  userNumber = document.querySelector("input").value;
+  userNumber = +document.querySelector("input").value;
   scoreFinish = score - (numberOfClicks + 1);
   console.log(`Число введенное пользлователем = ${userNumber}`);
   numberOfClicks += 1;
@@ -43,22 +48,24 @@ checkButton.addEventListener("click", function () {
 
   if (userNumber > requiredNumber) {
     soundWrong.play();
-    alert("Введенное число больше загаданного");
+    displayMessage("Введенное число больше загаданного");
+  } else if (!userNumber) {
+    soundWrong.play();
+    displayMessage("Введите число");
   } else if (userNumber < requiredNumber) {
     soundWrong.play();
-    alert("Введенное число меньше загаданного");
-  } else if (userNumber == ` `) {
-    soundWrong.play();
-    alert("Вы не ввели число в поле начните угадывать");
+    displayMessage("Введенное число меньше загаданного");
   } else {
     soundVictorty.play();
     document.querySelector(".highscore").innerHTML = `${numberOfClicks}`;
     body.style.background = "#2cd050";
-    alert("Победа, Вы угадали");
+    document.querySelector(".number").innerHTML = `${userNumber}`;
+    displayMessage("Вы победили");
   }
 
   if (numberOfClicks == 20) {
     checkButton.setAttribute("disabled", "");
-    alert("Вы использовали все 20 попыток, попробуйте сыграть снова попозже");
+    displayMessage("Вы проиграли");
+    soundGameOver.play();
   }
 });
